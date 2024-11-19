@@ -1,0 +1,52 @@
+-- CreateTable
+CREATE TABLE `Group` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `nama` ENUM('A', 'B', 'C', 'D') NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Club` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `nama` VARCHAR(191) NOT NULL,
+    `logo` VARCHAR(191) NOT NULL,
+    `tahun_berdiri` DATETIME(3) NOT NULL,
+    `nama_julukan` VARCHAR(191) NOT NULL,
+    `nama_lain` VARCHAR(191) NULL DEFAULT '',
+    `groupId` INTEGER NOT NULL,
+    `menang` INTEGER NOT NULL DEFAULT 0,
+    `kalah` INTEGER NOT NULL DEFAULT 0,
+    `seri` INTEGER NOT NULL DEFAULT 0,
+    `goal` INTEGER NOT NULL DEFAULT 0,
+    `kebobolan` INTEGER NOT NULL DEFAULT 0,
+    `selisih` INTEGER NOT NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Pemain` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `clubId` INTEGER NOT NULL,
+    `nama` VARCHAR(191) NOT NULL,
+    `photo` VARCHAR(191) NOT NULL,
+    `posisi` ENUM('GK', 'CB', 'RB', 'LB', 'DMF', 'CMF', 'RMF', 'LMF', 'CF', 'SB', 'WB', 'SMF', 'WF', 'SS') NOT NULL,
+    `no` INTEGER NOT NULL,
+    `goal` INTEGER NOT NULL DEFAULT 0,
+    `assist` INTEGER NOT NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `Club` ADD CONSTRAINT `Club_groupId_fkey` FOREIGN KEY (`groupId`) REFERENCES `Group`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Pemain` ADD CONSTRAINT `Pemain_clubId_fkey` FOREIGN KEY (`clubId`) REFERENCES `Club`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

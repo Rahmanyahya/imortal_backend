@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Group {
+  id        Int        @id @default(autoincrement())
+  nama      group_name
+  club      Club[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+}
+
+model Club {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  logo      String   @default("https://www.refugee-action.org.uk/wp-content/uploads/2016/10/anonymous-user.png")
+  groupId   Int
+  main      Int      @default(0)
+  poin      Int      @default(0)
+  menang    Int      @default(0)
+  kalah     Int      @default(0)
+  seri      Int      @default(0)
+  goal      Int      @default(0)
+  kebobolan Int      @default(0)
+  selisih   Int      @default(0)
+  pemain    Pemain[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+}
+
+model Pemain {
+  id        Int      @id @default(autoincrement())
+  clubId    Int
+  nama      String
+  photo     String   @default("https://www.refugee-action.org.uk/wp-content/uploads/2016/10/anonymous-user.png")
+  posisi    Posisi
+  no        Int
+  goal      Int      @default(0)
+  assist    Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  club Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+}
+
+enum group_name {
+  A
+  B
+  C
+  D
+}
+
+enum Posisi {
+  GK
+  CB
+  RB
+  LB
+  DMF
+  CMF
+  RMF
+  LMF
+  CF
+  SB
+  WB
+  SMF
+  WF
+  SS
+}
