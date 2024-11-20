@@ -6,6 +6,7 @@ export const getClasementController = async (req: Request, res: Response): Promi
         const data = await getClasement()
         return res.status(200).json({message: data})
     } catch (error) {
+        console.log(error)
         return res.status(500).json({message: "something went wrong please try again"})
     }
 }

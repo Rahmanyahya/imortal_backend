@@ -12,7 +12,8 @@ export const LoginController = async (req: Request, res: Response): Promise<any>
 
     bcrypt.compare(password, isUserExist.password, (err, _) => {
       if (err) return res.status(401).json({ message: "your email or password is not valid" })
-      res.cookie("token", jwt.sign(isUserExist.username, String(process.env.SECRET)))
+      res.cookie("token", jwt.sign(isUserExist.username, String(process.env.SECRET)), {secure: true, sameSite: "strict", httpOnly: true,
+        expires: new Date(Date.now() + 86400000)})
       return res.status(200).json({ message: "succes login" })
     })
   } catch (e) {

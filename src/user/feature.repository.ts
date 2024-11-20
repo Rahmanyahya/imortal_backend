@@ -15,20 +15,17 @@ export const getClasement = async () => {
         seri: item.seri,
         goal: item.goal,
         kebobolan: item.kebobolan,
-        selisih: item.seri,
-        logo: item.logo
+        selisih: item.selisih,
       }))
     }))
   )
 }
 
 export const getTopPlayerScore= async () => {
-  const data = await prisma.pemain.findMany({ where: {assist: {gt: 0}} ,include: { club: { select: { nama: true } } }, orderBy: { goal: "asc" } })
+  const data = await prisma.pemain.findMany({take: 5 ,where: {goal: {gt: 0}} ,include: { club: { select: { nama: true } } }, orderBy: { goal: "asc" } })
   return await Promise.all(
     data.map(player => ({
       nama: player.nama,
-      position: player.posisi,
-      photo: player.photo,
       goal: player.goal,
       assist: player.assist,
       club: player.club.nama

@@ -44,7 +44,6 @@ const addClubSchema = joi.object({
 export const addClubValidation = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     const validation = addClubSchema.validate(req.body)
     if (validation.error) {
-        if (req.file != undefined) deletePhoto(req.file.filename, "club")
         return res.status(400).json({message: validation.error.details.map(item => item.message).join(" ")})
     }
     return next()

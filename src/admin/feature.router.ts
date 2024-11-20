@@ -13,8 +13,8 @@ router.get("/group", cekJwt, readGroupController)
 router.delete('/group/:id', cekJwt,deleteGroupValidation, deleteGroupController)
 
 // CLUB ROUTER
-router.post('/club', cekJwt,uploadPhotoClub.single("photo"), addClubValidation, createClubController)
-router.put('/club/:id', cekJwt,uploadPhotoClub.single("photo"), updateClubValidation, updateClubController)
+router.post('/club',  addClubValidation, createClubController)
+router.put('/club/:id', updateClubValidation, updateClubController)
 router.delete('/club/:id', cekJwt, deleteClubValidation, deleteClubController)
 router.get('/club', cekJwt, readClubController)
 router.put('/club/tambah/kemenangan/:id', cekJwt, statistikValidation,plusMenang)
@@ -27,8 +27,8 @@ router.put('/club/tambah/kebobolan/:id', cekJwt, statistikValidation, tambahKebo
 router.put('/club/kurangi/kebobolan/:id', cekJwt, statistikValidation, kurangiKebobolanController)
 
 // PEMAIN ROUTER
-router.post('/pemain', cekJwt,uploadPhoto.single("photo"), addPemainValidation, addPemainController)
-router.put('/pemain/:id', cekJwt,uploadPhoto.single("photo"), updatePemainValidation, updatePemainController)
+router.post('/pemain', cekJwt, addPemainValidation, addPemainController)
+router.put('/pemain/:id', cekJwt, updatePemainValidation, updatePemainController)
 router.delete('/pemain/:id', cekJwt, deletePemainValidation, deletePemainController)
 router.get('/pemain', cekJwt, getAllPemainController)
 router.get('/pemain/club/:id', cekJwt, getAllPemainByClubController)
